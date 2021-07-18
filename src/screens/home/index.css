@@ -1,0 +1,20 @@
+.homeScreen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.homeScreen__body {
+  flex: 1;
+  background-color: #fafafa;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 20px;
+  justify-content: center;
+}
+.homeScreen__bodyColumn {
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0px 20px;
+}

@@ -1,0 +1,55 @@
+.postCard {
+  margin: 16px 0;
+  border: 1px solid #dbdbdb;
+  width: 300px;
+}
+
+.postCard__header {
+  background-color: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.postCard__header > .MuiAvatar-root {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+}
+
+.postCard__body {
+  height: fit-content;
+}
+
+.postCard__body > img {
+  width: 300px;
+  object-fit: scale-down;
+  display: block;
+}
+
+.postCard__header > h4 {
+  font-size: 14px;
+}
+
+.postCard__footer {
+  display: flex;
+  padding: 4px;
+  background-color: white;
+}
+
+.postCard__footerIcons {
+  min-width: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.postCard__footerExpand {
+  transform: rotate(45deg);
+}
+.MuiSvgIcon-root {
+  color: #3e3e3e;
+}
+
+.flexible {
+  flex: 1;
+}
