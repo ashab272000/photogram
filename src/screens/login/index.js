@@ -24,13 +24,6 @@ function LoginScreen() {
 
     }
 
-    const [hekki, sethekki] = useState(<p>hello</p>)
-
-    useEffect(() => {
-        console.log(authReducer)
-        sethekki((<h4>{authReducer.user?.displayName} is the name</h4>))
-    }, [])
-
 
 
     return (
@@ -42,7 +35,6 @@ function LoginScreen() {
                 <Button onClick={login}>
                     Sign In With Google
                 </Button>
-                {hekki}
             </div>
         </div>
     )

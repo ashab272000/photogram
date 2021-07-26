@@ -1,0 +1,18 @@
+.dropdownItem {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 4px 16px;
+}
+
+.dropdownItem:hover {
+  background-color: #fafafa;
+}
+
+.dropdownItem__rightIcon {
+  margin-left: auto;
+}
+
+.dropdownItem__leftIcon {
+  margin-right: 16px;
+}

@@ -14,12 +14,23 @@
   align-items: center;
 }
 
-.header__right > .MuiAvatar-root {
+.MuiAvatar-root {
+  height: 20px !important;
+  width: 20px !important;
+  padding: 2px;
   border: 1px solid #dbdbdb;
-  height: 24px;
-  width: 24px;
+}
+
+.header__rightProfile > .dropdown {
+  top: 77px;
+  right: 25px;
 }
 
 .flexible {
   flex: 1;
+}
+
+.divider {
+  height: 1px;
+  background-color: #dbdbdb;
 }
