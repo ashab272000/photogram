@@ -7,7 +7,12 @@ function Dropdown(props) {
             <div className="dropdown__pointer">
                 
             </div>
-            {props.children}
+            <div className="dropdown__pointer2">
+                
+            </div>
+            <div className="dropdown__body">
+                {props.children}
+            </div>
         </div>
     )
 }
