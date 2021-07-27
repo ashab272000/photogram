@@ -1,0 +1,31 @@
+.comment {
+  padding: 16px;
+  display: flex;
+  margin: 12px 0px;
+}
+
+.comment__avatar {
+  margin-right: 12px;
+}
+
+.comment__avatar > .MuiAvatar-root {
+  height: 28px;
+  width: 28px;
+}
+
+.comment__body {
+  flex: 1;
+}
+
+.comment__body p {
+  font-size: 14px;
+}
+
+.comment__body > p span {
+  font-weight: 500;
+}
+
+.comment__body > p:last-child {
+  margin-top: 12px;
+  color: lightgray;
+}

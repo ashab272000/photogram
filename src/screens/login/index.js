@@ -2,8 +2,9 @@ import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signIn } from '../../actions'
-import { auth, provider } from '../../firebase'
+import db, { auth, provider } from '../../firebase'
 import { useHistory } from 'react-router'
+import firebase from 'firebase'
 import './index.css'
 
 
@@ -15,6 +16,17 @@ function LoginScreen() {
     const login = () => {
         auth.signInWithPopup(provider)
         .then(result => {
+            const userRef = db.collection('profiles').doc(result?.user.uid)
+            userRef.get()
+            .then((snap) => {
+                if(snap.exists){
+                    userRef.update({'loggedTimestamp': firebase.firestore.FieldValue.serverTimestamp()})
+                }else {
+                    userRef.set({
+                        username: result?.user.displayName
+                    })
+                }
+            })
             dispatch(signIn(result?.user))
             history.push('/');
         })

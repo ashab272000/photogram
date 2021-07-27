@@ -1,0 +1,114 @@
+.postScreen__postBody {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 20px;
+  background-color: #fafafa;
+}
+
+.postScreen__postBody__post {
+  width: fit-content;
+  background-color: #fafafa;
+  border: 1px solid #dbdbdb;
+  border-right: 0;
+}
+
+.postScreen__postBody__post > img {
+  display: block;
+  max-width: 50vw;
+  height: 76vh;
+  object-fit: scale-down;
+}
+
+.postScreen__postBody__comments {
+  width: 335px;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  height: 76vh;
+  border-left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.postScreen__postBody__commentsHeader {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.postScreen__postBody__commentsHeaderRight {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.postScreen__postBody__commentsHeaderRight > .MuiAvatar-root {
+  margin-right: 12px;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.postScreen__postBody__commentsHeaderRight > p {
+  font-weight: 500;
+  font-size: 14px;
+  padding-bottom: 3px;
+}
+
+.postScreen__postBody__commentsBody {
+  flex: 1;
+  overflow-y: auto;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.postScreen__postBody__commentsFooterInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.postScreen__postBody__commentsFooterInfo p {
+  font-size: 13px;
+  text-align: right;
+}
+.postScreen__postBody__commentsFooterInfo p:last-child {
+  color: grey;
+}
+
+.postScreen__postBody__commentsFooterInfo p > span {
+  font-weight: 500;
+}
+
+.postScreen__postBody__commentsFooterInput {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  /* width: 100%; */
+  justify-content: space-between;
+}
+/* 
+.postScreen__postBody__commentsFooterInput > .MuiAvatar-root {
+  margin: 12px;
+} */
+
+.postScreen__postBody__commentsFooterInput input {
+  outline: none;
+  border: none;
+  width: 100%;
+  border-bottom: #eaeaea 1px solid;
+}
+
+.postScreen__postBody__commentsFooterInput form {
+  flex: 0.9;
+}
+
+.postScreen__postBody__commentsFooterInput form > button {
+  display: none;
+}
+
+.postScreen__postBody__commentsFooterInput button {
+  color: #5862fa;
+}

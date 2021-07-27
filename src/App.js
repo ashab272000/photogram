@@ -4,8 +4,10 @@ import LoginScreen from './screens/login';
 import {createStore} from 'redux';
 import allReducers from './reducers'
 import { Provider } from 'react-redux';
+import PostScreen from './screens/post';
 
-const store = createStore(allReducers);
+const store = createStore(allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 
 function App() {
@@ -14,6 +16,9 @@ function App() {
       <div className="app">
         <Router>
           <Switch>
+            <Route path='/p'>
+              <PostScreen />
+            </Route>
             <Route path="/login">
               <LoginScreen />
             </Route>

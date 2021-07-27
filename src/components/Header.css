@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-.MuiAvatar-root {
+.header__rightProfile .MuiAvatar-root {
   height: 20px !important;
   width: 20px !important;
   padding: 2px;
