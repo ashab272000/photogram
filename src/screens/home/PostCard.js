@@ -68,7 +68,7 @@ function PostCard({id, post}) {
     return (
         <div className="postCard">
             <div className="postCard__header">
-                <Avatar/>
+                <Avatar src={post.userAvatar}/>
                 <h4>{post.username}</h4>
             </div>
             <div className="postCard__body">

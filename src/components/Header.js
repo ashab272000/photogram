@@ -23,7 +23,9 @@ function Header() {
     }
 
     const handleAddPostClick = () => {
-        setOpenModal(!openModal);
+        if(authReducer.user != null) {
+            setOpenModal(!openModal);
+        }
     }
     
 
