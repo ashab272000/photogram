@@ -23,7 +23,8 @@ function LoginScreen() {
                     userRef.update({'loggedTimestamp': firebase.firestore.FieldValue.serverTimestamp()})
                 }else {
                     userRef.set({
-                        username: result?.user.displayName
+                        username: result?.user.displayName,
+                        userAvatar: result?.user.photoURL,
                     })
                 }
             })

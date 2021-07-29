@@ -7,10 +7,13 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import DropdownItem from './DropdownItem';
+import ReactModal from 'react-modal';
+import AddPost from '../screens/addPost/AddPost';
 
 function Header() {
 
     const [openDropdown, setOpenDropdown] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
 
     const authReducer = useSelector(state => state.authReducer)
     const history = useHistory();
@@ -18,10 +21,15 @@ function Header() {
         history.push('/login')
 
     }
+
+    const handleAddPostClick = () => {
+        setOpenModal(!openModal);
+    }
     
 
     return (
         <div className="header">
+            <AddPost isOpen={openModal} onClickClose={handleAddPostClick} />
             <div className="header__left">
                 <h2>PHOTOGRAM</h2>
             </div>
@@ -33,7 +41,7 @@ function Header() {
                     <HomeIcon />
                 </IconButton>
                 <IconButton>
-                    <AddBoxOutlinedIcon />
+                    <AddBoxOutlinedIcon onClick={handleAddPostClick}/>
                 </IconButton>
                 { authReducer.user != null ?
                  <div className="header__rightProfile">

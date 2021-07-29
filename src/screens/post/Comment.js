@@ -6,10 +6,10 @@ function Comment({comment}) {
     return (
         <div className='comment'>
             <div className="comment__avatar">
-                <Avatar />
+                <Avatar src={comment?.userAvatar} />
             </div>
             <div className="comment__body">
-                <p><span>Mohammed Ashab Uddin</span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis nesciunt libero dolorem quos, ipsa veritatis nobis in illo molestias quidem dignissimos commodi accusantium hic modi consectetur error quo suscipit. Animi!</p>
+                <p><span>{comment.username} </span>{comment.comment}</p>
                 <p>17h</p>
             </div>
         </div>

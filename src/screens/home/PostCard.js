@@ -8,6 +8,7 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 function PostCard({id, post}) {
@@ -15,20 +16,29 @@ function PostCard({id, post}) {
     const [imgUrl, setImgUrl] = useState('')
     const [like, setLike] = useState(false)
     const authReducer = useSelector(state => state.authReducer)
+    const history = useHistory();
 
     const handleLikeClick = () => {
-        const postRef = db.collection('profiles').doc(authReducer.user?.uid).collection('likedPosts').doc(id);
-        postRef.get()
-        .then((snap) => {
-            if(!snap.exists){
-                postRef.set(post);
-                setLike(true)
-            }else {
-                postRef.delete()
-                setLike(false)
-            }
-        })
-        
+        if(authReducer.user != null){
+            const postRef = db.collection('posts').doc(id).collection('likedBy').doc(authReducer.user?.uid);
+            postRef.get()
+            .then((snap) => {
+                if(!snap.exists){
+                    postRef.set({
+                        'username': authReducer.user?.displayName,
+                        'userAvatar': authReducer.user?.photoURL,
+                    });
+                    setLike(true)
+                }else {
+                    postRef.delete()
+                    setLike(false)
+                }
+            })
+        }
+    }
+
+    const handleCommentClick = () => {
+        history.push(`/post/${id}`);
     }
     
     useEffect(() => {
@@ -40,15 +50,17 @@ function PostCard({id, post}) {
             console.log(imgUrl);
         }
         
-        const postRef = db.collection('profiles').doc(authReducer.user?.uid).collection('likedPosts').doc(id);
-        postRef.get()
-        .then((snap) => {
-            if(snap.exists){
-                setLike(true)
-            }else {
-                setLike(false)
-            }
-        })
+        if(authReducer.user != null){
+            const postRef = db.collection('posts').doc(id).collection('likedBy').doc(authReducer.user?.uid);
+            postRef.get()
+            .then((snap) => {
+                if(!snap.exists){                
+                    setLike(false)
+                }else {
+                    setLike(true)
+                }
+            })
+        }
 
         downloadImg();
     }, [])
@@ -76,11 +88,11 @@ function PostCard({id, post}) {
                         {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                     <IconButton>
-                       <ModeCommentOutlinedIcon />
+                       <ModeCommentOutlinedIcon onClick={handleCommentClick} />
                     </IconButton>
-                    <IconButton>
+                    {/* <IconButton>
                        <BookmarkBorderOutlinedIcon />
-                    </IconButton>
+                    </IconButton> */}
                 </div>
             </div>
         </div>

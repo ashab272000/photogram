@@ -1,0 +1,111 @@
+.addPost {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.addPost__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.addPost__header > h3 {
+  flex: 1;
+  font-size: 28;
+  font-weight: 500;
+  text-align: center;
+}
+
+.addPost__headerContainer {
+  width: 60px;
+  text-align: right;
+}
+
+.addPost__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.addPost__body > h2 {
+  font-weight: 300;
+  margin-top: 12px;
+  font-size: 24px;
+}
+
+.addPost__body > button {
+  background-color: #0095f6;
+  color: white;
+  margin-top: 12px;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+.addPost__bodyCompose {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+}
+
+.addPost__bodyComposeLeft {
+  flex: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #dbdbdb;
+  padding: 30px;
+}
+
+.addPost__bodyComposeLeft > img {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down;
+}
+
+.addPost__bodyComposeRight {
+  flex: 0.4;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.addPost__bodyComposeRight > textarea {
+  outline: none;
+  border: none;
+  line-height: 1.5em;
+  font-size: 16px;
+  width: 100%;
+  margin: 16px 0;
+  resize: none;
+}
+
+.addPost__bodyComposeRight > button {
+  width: 100%;
+  background-color: #0095f6;
+  color: white;
+}
+
+.addPost__bodyComposeRight__header {
+  display: flex;
+  align-items: center;
+}
+
+.addPost__bodyComposeRight__header > h2 {
+  margin-left: 12px;
+  font-size: 16px;
+}
+
+.addPost__bodyComposeRight__header > .MuiAvatar-root {
+  width: 28px;
+  height: 28px;
+}
+
+/* .addPost__containerHeader */

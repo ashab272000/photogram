@@ -16,7 +16,7 @@ function App() {
       <div className="app">
         <Router>
           <Switch>
-            <Route path='/p'>
+            <Route path='/post/:postId'>
               <PostScreen />
             </Route>
             <Route path="/login">
