@@ -11,11 +11,11 @@ import './index.css'
 import Comment from './Comment'
 import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
+import { addComment, addLike, deleteLike, getComments, getNumOfComments, getNumOfLikes, getPost, getPostImageUrl, isLikedByUser } from '../../data/postRequests'
 
 function PostScreen() {
 
     const {postId} = useParams();
-    console.log(postId);
     const [post, setPost] = useState(null)
     const [comments, setComments] = useState([])
     const [imgUrl, setImgUrl] = useState('')
@@ -26,46 +26,40 @@ function PostScreen() {
     const authReducer = useSelector(state => state.authReducer)
 
     // Whenever user clicks on the like button
-    const handleLikeClick = () => {
+    const handleLikeClick = async () => {
+        // if user is not null
         if(authReducer.user != null){
-            const postRef = db.collection('posts').doc(postId).collection('likedBy').doc(authReducer.user?.uid);
-            postRef.get()
-            .then((snap) => {
-                if(!snap.exists){
-                    postRef.set({
-                        'username': authReducer.user?.displayName,
-                        'userAvatar': authReducer.user?.photoURL,
-                    });
-                    setLike(true)
-                    setLikeAmount(likeAmount+1)
-                }else {
-                    postRef.delete()
-                    setLike(false)
-                    setLikeAmount(likeAmount-1)
-                }
-            })
+            // Add Like or delete the like
+            // adn SetLike
+            if(!like){
+                await addLike(post._id, authReducer.user?.uid)
+                setLike(true)
+                setLikeAmount(likeAmount + 1)
+            }else {
+                await deleteLike(post._id, authReducer.user?.uid)
+                setLike(false)
+                setLikeAmount(likeAmount - 1)
+            }
         }
     }   
 
-    const handleCommentClick = (e) => {
+    const handleCommentClick = async (e) => {
         e.preventDefault();
+        // if the user is not null
         if(authReducer.user != null){
             if(commentInput != '') {
+                // Add the new comment
                 const newComment = {
                     uid: authReducer.user?.uid,
                     username: authReducer.user?.displayName,
                     userAvatar: authReducer.user?.photoURL,
-                    comment:commentInput,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    comment: commentInput
                 }
-    
-                db
-                .collection('posts')
-                .doc(postId)
-                .collection('comments')
-                .add(newComment)
-    
-                setCommentAmount(commentAmount+1)
+
+                await addComment(post._id, commentInput, authReducer.user?.uid)
+
+                // Set the comment amount
+                setCommentAmount(commentAmount + 1)
                 setComments([newComment, ...comments])
                 setCommentInput('')
             }
@@ -77,63 +71,48 @@ function PostScreen() {
     }
 
     // Gets all the posts and setPostState is called
-    useEffect(() => {
-        const postRef = db.collection('posts').doc(postId)
-        postRef.get()
-        .then( snap => {
-            setPost(snap.data())
-        })        
-    }, []) 
-    
-    useEffect(() => {
+    useEffect(async () => {
+        // Get Post
+        // console.log('PostId: ')
+        // console.log(postId)
+        const tempPost = await getPost(postId)
+        // console.log('TempPost: ')
+        // console.log(tempPost)
         
-        // Downloading post
-        const downloadImg = async () => {
-            const fileRef = storageRef.child(`posts/${postId}.jpg`)
-            const url = await fileRef.getDownloadURL();
-            setImgUrl(url);
-        }
+        // Set Post 
+        setPost(tempPost)
+        // console.log("Post after set:")
+        // console.log(post)
+ 
+        // set the image url of the post
+        // const downloadImg = async () => {
+        //     const fileRef = storageRef.child(`posts/${postId}.jpg`)
+        //     const url = await fileRef.getDownloadURL();
+        //     setImgUrl(url);
+        // }
+        setImgUrl(getPostImageUrl(tempPost.image))
         
         // Check if the user already liked the post
-        if(authReducer.user != null){
-            const postRef = db.collection('posts').doc(postId).collection('likedBy').doc(authReducer.user?.uid);
-            postRef.get()
-            .then((snap) => {
-                if(!snap.exists){
-                    setLike(false)
-                }else {
-                    setLike(true)
-                }
-            })
-        }
+        // and set the user liked
+        const isLiked = await isLikedByUser(tempPost._id, authReducer.user?.uid)
+        setLike(isLiked);
 
-        downloadImg();
-        
+
         // get number of likes
-        db.collection('posts').doc(postId).collection('likedBy').get().then(snap => {
-            setLikeAmount(snap.size)
-         });
-        // Get number of comments
-        db.collection('posts').doc(postId).collection('comments').get().then(snap => {
-            setCommentAmount(snap.size)
-         });
+        const numOfLikes = await getNumOfLikes(tempPost._id)
+        setLikeAmount(numOfLikes)
 
-        db
-        .collection('posts')
-        .doc(postId)
-        .collection('comments')
-        .orderBy('timestamp', 'desc')
-        .limit(8)
-        .get()
-        .then(querySnap => {
-            // The is bugged
-            // need to add the previous comments if scrolls down and getting new comments
-            // console.log(querySnap)
-            setComments(querySnap.docs.map((doc) => doc.data()))
-            // console.log("Priniting Comments")
-            // console.log(comments)
-        })
-    }, [post])
+        // Get number of comments
+        const numOfComments = await getNumOfComments(tempPost._id)
+        setCommentAmount(numOfComments)
+
+        // Get Comments
+        const tempComments = await getComments(tempPost._id)
+        setComments(tempComments.comments)
+
+
+    }, []) 
+    
 
 
 
@@ -162,7 +141,7 @@ function PostScreen() {
                                 comment: post.caption,
                                 userAvatar: post?.userAvatar,
                             }} /> }
-                            {comments.map((comment) => <Comment comment={comment} /> )}
+                            {comments?.map((comment) => <Comment comment={comment} /> )}
                         </div>
                     </div>
                     <div className="postScreen__postBody__commentsFooter">

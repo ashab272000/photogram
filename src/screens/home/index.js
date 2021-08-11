@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Header from '../../components/Header'
+import { getAllPosts } from '../../data/postRequests'
 import db from '../../firebase'
 import useWindowDimensions from '../../hooks/UseWindowDimension'
 import './index.css'
@@ -17,8 +18,9 @@ function HomeScreen() {
         for (let i = 0; i < numOfCards; i++) {
             const postsInColumns = [];
             for (let j = i; j < posts.length; j+= numOfCards) {
+                
                 const post = posts[j];
-                postsInColumns.push(<PostCard key={post.id} id={post.id} post={post.data()} />);
+                postsInColumns.push(<PostCard key={post._id} id={post._id} post={post} />);
             }
             bodyColumns.push(
             <div className="homeScreen__bodyColumn" key={i}> 
@@ -29,14 +31,12 @@ function HomeScreen() {
         return bodyColumns;
     }
 
-    useEffect(() => {
-        const unsubscribe = db
-        .collection('posts')
-        .orderBy('timestamp', 'desc')
-        .onSnapshot(snapshot => {
-            setPosts(snapshot.docs);
-        })
-        return () => unsubscribe();
+    useEffect(async () => {
+       const posts = await getAllPosts();
+       if(posts != null) {
+           setPosts(posts)
+       }
+        
     }, [])
 
     useEffect(() => {

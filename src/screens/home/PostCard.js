@@ -9,60 +9,51 @@ import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { addLike, deleteLike, getPostImage, getPostImageUrl, isLikedByUser } from '../../data/postRequests';
 
 
-function PostCard({id, post}) {
+function PostCard({_id, post}) {
     
     const [imgUrl, setImgUrl] = useState('')
     const [like, setLike] = useState(false)
     const authReducer = useSelector(state => state.authReducer)
     const history = useHistory();
 
-    const handleLikeClick = () => {
+    const handleLikeClick = async () => {
         if(authReducer.user != null){
-            const postRef = db.collection('posts').doc(id).collection('likedBy').doc(authReducer.user?.uid);
-            postRef.get()
-            .then((snap) => {
-                if(!snap.exists){
-                    postRef.set({
-                        'username': authReducer.user?.displayName,
-                        'userAvatar': authReducer.user?.photoURL,
-                    });
-                    setLike(true)
-                }else {
-                    postRef.delete()
+            const postId = post._id
+            const uid = authReducer.user?.uid
+            // Check if the user liked the post
+            const result = await isLikedByUser(postId, uid)
+
+            // If user has already liked, then delete the like
+            // else like the post
+            if (result){
+                const deleteRes = await deleteLike(postId, uid)
+                if(deleteRes != null){
                     setLike(false)
                 }
-            })
+            } else {
+                const addRes = await addLike(postId, uid)
+                if(addRes != null){
+                    setLike(true)
+                }
+            }
         }
     }
 
     const handleCommentClick = () => {
-        history.push(`/post/${id}`);
+        history.push(`/post/${post._id}`);
     }
     
-    useEffect(() => {
+    useEffect(async () => {
         
-        const downloadImg = async () => {
-            const fileRef = storageRef.child(`posts/${id}.jpg`)
-            const url = await fileRef.getDownloadURL();
-            setImgUrl(url);
-            console.log(imgUrl);
-        }
+        // set the image url
+        setImgUrl(getPostImageUrl(post.image))
         
-        if(authReducer.user != null){
-            const postRef = db.collection('posts').doc(id).collection('likedBy').doc(authReducer.user?.uid);
-            postRef.get()
-            .then((snap) => {
-                if(!snap.exists){                
-                    setLike(false)
-                }else {
-                    setLike(true)
-                }
-            })
-        }
-
-        downloadImg();
+        // Check if the user liked and set the setLike accordingly
+        const isLiked = await isLikedByUser(post._id, authReducer.user?.uid)
+        setLike(isLiked);
     }, [])
 
     return (
