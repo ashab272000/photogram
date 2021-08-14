@@ -3,7 +3,8 @@ const initialState = {
 }
 
 const actionTypes = {
-    SIGN_IN: 'SIGN_IN'
+    SIGN_IN: 'SIGN_IN',
+    SIGN_OUT: 'SIGN_OUT'
 }
 
 const authReducer = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.user,
+            }
+        case actionTypes.SIGN_OUT:
+            return {
+                ...state,
+                user: null,
             }
         
         default:

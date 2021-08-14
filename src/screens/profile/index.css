@@ -1,0 +1,179 @@
+.profile__body {
+  background-color: #fafafa;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.profile__body > .container {
+  flex: 1;
+  max-width: 900px;
+  padding: 20px;
+}
+
+.profile__bodyInfo {
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: center; */
+  margin-bottom: 44px;
+  width: 100%;
+}
+
+.profile__bodyInfo__pic {
+  border-radius: 100px;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(198, 45, 144) 0%,
+    rgb(250, 159, 77) 100%
+  );
+  padding: 3px;
+  transform: rotate(45deg);
+  margin-right: 60px;
+}
+
+.profile__bodyInfo__pic .container {
+  border-radius: 100px;
+  background-color: #fafafa;
+  padding: 1px;
+}
+
+.profile__bodyInfo__pic .container .MuiAvatar-root {
+  width: 150px;
+  height: 150px;
+  margin: 4px;
+  transform: rotate(-45deg);
+}
+
+.profile__bodyInfo__infoHeader,
+.profile__bodyInfo__infoCounts {
+  display: flex;
+}
+
+.profile__bodyInfo__infoCounts--mobile {
+  display: none;
+}
+
+.profile__bodyInfo__info {
+  margin-left: 24px;
+  max-width: 600px;
+}
+
+.profile__bodyInfo__infoHeader > h1 {
+  font-weight: 200;
+}
+
+.profile__bodyInfo__infoHeader > button {
+  background-color: #0095f6;
+  color: white;
+  margin: 12px 0px 0px 24px;
+}
+
+.profile__bodyInfo__info > h4 {
+  font-weight: 600;
+}
+
+.profile__bodyInfo__info p {
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.profile__desc--mobile {
+  font-weight: 400;
+  font-size: 17px;
+  display: none;
+}
+
+.profile__bodyInfo__infoCounts,
+.profile__bodyInfo__infoCounts--mobile {
+  margin: 18px 0px;
+}
+
+.profile__bodyInfo__infoCounts > p,
+.profile__bodyInfo__infoCounts--mobile > p {
+  margin-right: 28px;
+}
+
+.profile__bodyInfo__infoCounts b,
+.profile__bodyInfo__infoCounts--mobile b {
+  font-weight: 600;
+}
+
+.profile__bodyPosts {
+  width: 100%;
+}
+
+.profile__bodyPosts__header {
+  margin: 20px 0px;
+}
+
+.profile__bodyPosts__header > hr {
+  border-color: #fefefe;
+}
+
+.profile__bodyPosts__header > h4 {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.profile__bodyPosts__list {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+.profile__bodyPosts__listPost::before {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+}
+.profile__bodyPosts__listPost {
+  position: relative;
+  background: transparent;
+  width: 100%;
+}
+.profile__bodyPosts__listPost > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+@media screen and (max-width: 736px) {
+  .profile__bodyInfo__pic {
+    margin-right: 16px;
+  }
+  .profile__bodyInfo__pic .container .MuiAvatar-root {
+    width: 75px;
+    height: 75px;
+  }
+  .profile__bodyInfo__infoHeader {
+    display: block;
+  }
+
+  .profile__bodyInfo__infoHeader > button {
+    margin-left: 0;
+  }
+
+  .profile__bodyInfo__infoCounts {
+    display: none;
+  }
+
+  .profile__bodyInfo__infoCounts {
+    display: none;
+  }
+  .profile__bodyInfo__infoCounts--mobile {
+    display: flex;
+  }
+
+  .profile__desc {
+    display: none;
+  }
+  .profile__desc--mobile {
+    display: inline;
+  }
+}

@@ -43,6 +43,27 @@ function PostScreen() {
         }
     }   
 
+    const getDisplayTime = () => {
+        // Get time difference in seconds
+        if(post != null){
+            const timeDiff = (Date.now() - Date.parse(post?.createdAt))/1000
+            
+            if(timeDiff < 60){
+                return `${Math.floor(timeDiff)}s`
+            } else if(timeDiff < 3600) {
+                return `${Math.floor(timeDiff/60)}m`
+            } else if(timeDiff < 86400){
+                return `${Math.floor(timeDiff/3600)}h`
+            }else if(timeDiff < 31536000){
+                return `${Math.floor(timeDiff/86400)}d`
+            }else{
+                return `${Math.floor(timeDiff/31536000)}y`
+            }
+        }
+
+        
+    }
+
     const handleCommentClick = async (e) => {
         e.preventDefault();
         // if the user is not null
@@ -140,6 +161,7 @@ function PostScreen() {
                                 username: post.username,
                                 comment: post.caption,
                                 userAvatar: post?.userAvatar,
+                                createdAt: post.createdAt,
                             }} /> }
                             {comments?.map((comment) => <Comment comment={comment} /> )}
                         </div>
@@ -153,7 +175,7 @@ function PostScreen() {
                             </div>
                             <div className="right">
                                 <p> <span>{likeAmount}</span> Likes  <span>{commentAmount}</span> comments</p>
-                                <p>8 hours ago</p>
+                                <p>{getDisplayTime()}</p>
                             </div>
                         </div>
                         <div className="postScreen__postBody__commentsFooterInput">

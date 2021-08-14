@@ -58,12 +58,12 @@ export const getPostImage = async (imageName) => {
  * @param {String} uid 
  * @returns 
  */
-export const addPost = async (filePath, caption, uid) => {
+export const addPost = async (file, caption, uid) => {
     try {
         const form = new FormData();
-        form.append('image', fs.createReadStream(filePath))
-        form.append('caption', caption ?? '')
         form.append('uid', uid)
+        form.append('caption', caption ?? '')
+        form.append('image', file)
 
         const res = await axios.post(`${url}/post/add`, form)
         if(res.data.success){

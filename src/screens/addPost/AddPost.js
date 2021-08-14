@@ -7,6 +7,7 @@ import { useDropzone} from 'react-dropzone';
 import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
 import firebase from 'firebase';
+import { addPost } from '../../data/postRequests';
 
 function AddPost({ isOpen, onClickClose }) {
 
@@ -42,24 +43,30 @@ function AddPost({ isOpen, onClickClose }) {
         i.disabled = true;
     }
     const handleClickShare = async () => {
+        // Set the header and body to uploading set
         setHeader('Uploading')
         setBody(loadingBody)
-        const user = authReducer.user
-        console.log(`captionValue before adding the post: ${captionValue}`)
-        const newPostRef = await db.collection('posts')
-        .add({
-            uid: user.uid,
-            username: user.displayName,
-            userAvatar: user?.photoURL,
-            caption: captionValue,
-            likes:0,
-            comments:0,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
+        // const newPostRef = await db.collection('posts')
+        // .add({
+        //     uid: user.uid,
+        //     username: user.displayName,
+        //     userAvatar: user?.photoURL,
+        //     caption: captionValue,
+        //     likes:0,
+        //     comments:0,
+        //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        // })
 
-        // newPostRef.
-        const imageRef = storageRef.child(`posts/${newPostRef.id}.jpg`)
-        await imageRef.put(files[0])
+        // // newPostRef.
+        // const imageRef = storageRef.child(`posts/${newPostRef.id}.jpg`)
+        // await imageRef.put(files[0])
+
+        // Add Post
+        console.log('File')
+        console.log(files[0])
+        await addPost(files[0], captionValue, authReducer.user?.uid)
+
+        // Close the modal after reseting the header and the body
         setHeader('New Post')
         setBody(initialBody)
         setFiles([])

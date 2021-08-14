@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import Header from '../../components/Header'
 import { getAllPosts } from '../../data/postRequests'
 import db from '../../firebase'
@@ -9,6 +10,7 @@ import PostCard from './PostCard'
 function HomeScreen() {
     const [posts, setPosts] = useState([]);
     const [numOfCards, setNumOfCards] = useState(5)
+    const authReducer = useSelector(state => state.authReducer)
     
     const { height, width } = useWindowDimensions();
     
