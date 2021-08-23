@@ -109,3 +109,12 @@
 }
 
 /* .addPost__containerHeader */
+
+@media screen and (max-width: 736px) {
+  .addPost__bodyCompose {
+    display: block;
+  }
+  .addPost__bodyComposeLeft {
+    height: 60%;
+  }
+}

@@ -7,32 +7,21 @@ import { useHistory } from 'react-router'
 import firebase from 'firebase'
 import './index.css'
 import { addProfile, getProfile } from '../../data/profileRequests'
+import { useCookies } from 'react-cookie'
 
 
 function LoginScreen() {
     const authReducer = useSelector(state => state.authReducer)
     const dispatch = useDispatch();
     const history = useHistory();
+    const [cookies, setCookie] = useCookies(['credential']);
 
     const login = () => {
         auth.signInWithPopup(provider)
         .then(async (result) => {
-
-            // const userRef = db.collection('profiles').doc(result?.user.uid)
-            // userRef.get()
-            // .then((snap) => {
-            //     if(snap.exists){
-            //         userRef.update({'loggedTimestamp': firebase.firestore.FieldValue.serverTimestamp()})
-            //     }else {
-            //         userRef.set({
-            //             username: result?.user.displayName,
-            //             userAvatar: result?.user.photoURL,
-            //         })
-            //     }
-            // })
-            
             // Check if the profile exists
             // If not then add the profile to the database
+            setCookie('credential', result.credential, { path: '/' });
             let profile = await getProfile(result?.user.uid)
             if(profile == null) {
                 const user = {

@@ -8,6 +8,7 @@ import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
 import firebase from 'firebase';
 import { addPost } from '../../data/postRequests';
+import useWindowDimensions from '../../hooks/UseWindowDimension';
 
 function AddPost({ isOpen, onClickClose }) {
 
@@ -165,17 +166,25 @@ function AddPost({ isOpen, onClickClose }) {
 function CaptionTextArea({onChangeCaption}) {
 
     const [captionValue, setCaptionValue] = useState('')
-    
+    const [numOfRows, setNumOfRows] = useState(7)
+    const { height, width } = useWindowDimensions();
     const handleCaptionOnChange = (e) => {
         setCaptionValue(e.target.value)
         
     }
+
+    useEffect(() => {
+        if(width < 736) {
+            setNumOfRows(1)
+        }
+    }, [width])
+
     useEffect(() => {
         onChangeCaption(captionValue)
     }, [captionValue])
 
     return (
-        <textarea rows={7} placeholder={'Write a caption'} onChange={handleCaptionOnChange} value={captionValue}/>
+        <textarea rows={numOfRows} placeholder={'Write a caption'} onChange={handleCaptionOnChange} value={captionValue}/>
     )
 }
 

@@ -4,11 +4,12 @@ import './PostCard.css'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
-import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { addLike, deleteLike, getPostImage, getPostImageUrl, isLikedByUser } from '../../data/postRequests';
 
 
@@ -42,6 +43,10 @@ function PostCard({_id, post}) {
         }
     }
 
+    const handleProfileClick = () => {
+        history.push(`/profile/${post.uid}`)
+    }
+
     const handleCommentClick = () => {
         history.push(`/post/${post._id}`);
     }
@@ -59,11 +64,12 @@ function PostCard({_id, post}) {
     return (
         <div className="postCard">
             <div className="postCard__header">
-                <Avatar src={post.userAvatar}/>
+                <Avatar onClick={handleProfileClick} src={post.userAvatar}/>
                 <h4>{post.username}</h4>
             </div>
             <div className="postCard__body">
-                <img src={imgUrl} alt="postImage" />
+                <LazyLoadImage src={imgUrl} placeholder={<Skeleton height={200}/>} />
+                {/* <img src={imgUrl} alt="postImage"  /> */}
             </div>
             <div className="postCard__footer">
                 <div className="postCard__footerExpand">

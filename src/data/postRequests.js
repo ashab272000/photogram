@@ -1,7 +1,7 @@
 import axios from 'axios'
 import FormData from 'form-data';
 import fs from 'fs'
-// Get all the post
+// Get all the post by latest
 const url = "http://localhost:5000";
 export const getAllPosts = async () => {
     try {
@@ -14,6 +14,35 @@ export const getAllPosts = async () => {
         console.log('postRequests.getAllPosts')
         console.log(`Error: ${error}`)
         return null
+    }
+}
+
+
+export const getPostsByTrending = async (limit = 30, date = Date.now()) => {
+    try {
+        const res = await axios.get(`${url}/post/trending/${limit}/${date}`)
+        if(res.data.success){
+            return res.data.data
+        }
+    } catch (error) {
+        console.log('postRequests.getPostsByTrending')
+        console.log(`Error: ${error}`)
+        return []
+    }
+}
+
+export const getPostByFollowingUsers = async (userId ,limit = 30, date = Date.now()) => {
+    try {
+        const res = await axios.get(`${url}/post/profile/followingPosts/${userId}/${limit}/${date}`)
+        if(res.data.success){
+            console.log("Posts from followingPosts")
+            console.log(res.data.data)
+            return res.data.data
+        }
+    } catch (error) {
+        console.log('postRequests.getPostByFollowingUsers')
+        console.log(`Error: ${error}`)
+        return []
     }
 }
 // Get a the post

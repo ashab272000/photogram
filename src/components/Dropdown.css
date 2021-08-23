@@ -1,13 +1,14 @@
 .dropdown {
   position: absolute;
   width: 220px;
+  z-index: 10;
 }
 
 .dropdown__pointer {
   width: 20px;
   height: 20px;
   margin-bottom: -22px;
-  z-index: 8;
+  z-index: -8;
   transform: translate(157px, -10px) rotate(45deg);
   background-color: white;
   border-radius: 5px;
@@ -18,7 +19,7 @@
   width: 30px;
   height: 17px;
   margin: -17px 0;
-  z-index: 8;
+  z-index: -8;
   transform: translate(152px, 0px);
   background-color: white;
 }

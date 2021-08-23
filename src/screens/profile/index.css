@@ -45,6 +45,16 @@
   transform: rotate(-45deg);
 }
 
+p .MuiIconButton-root {
+  height: 16px;
+  width: 16px;
+  margin-top: -12px;
+}
+p .MuiIconButton-root .MuiSvgIcon-root {
+  height: 16px;
+  width: 16px;
+}
+
 .profile__bodyInfo__infoHeader,
 .profile__bodyInfo__infoCounts {
   display: flex;
@@ -78,9 +88,16 @@
   font-size: 17px;
 }
 
+.profile__desc,
+.profile__desc--mobile {
+  outline: none;
+}
+
 .profile__desc--mobile {
   font-weight: 400;
   font-size: 17px;
+}
+.profile__bodyInfo__desc--mobile {
   display: none;
 }
 
@@ -132,6 +149,7 @@
   position: relative;
   background: transparent;
   width: 100%;
+  cursor: pointer;
 }
 .profile__bodyPosts__listPost > img {
   position: absolute;
@@ -143,6 +161,46 @@
   object-fit: cover;
 }
 
+.profile__bodyPosts__listPost > img:hover + .hover__layer {
+  visibility: visible;
+}
+
+.hover__layer {
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+}
+
+.hover__layer > .MuiSvgIcon-root {
+  color: white;
+  margin-right: 8px;
+  height: 20px;
+  width: 20px;
+}
+
+.hover__layer > p {
+  color: white;
+  margin-right: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.hover__layer:hover {
+  visibility: visible;
+}
+
+.hover__layer > #profile__comments {
+  margin-right: 0px;
+}
+
 @media screen and (max-width: 736px) {
   .profile__bodyInfo__pic {
     margin-right: 16px;
@@ -152,7 +210,7 @@
     height: 75px;
   }
   .profile__bodyInfo__infoHeader {
-    display: block;
+    flex-direction: column;
   }
 
   .profile__bodyInfo__infoHeader > button {
@@ -170,10 +228,10 @@
     display: flex;
   }
 
-  .profile__desc {
+  .profile__bodyInfo__desc {
     display: none;
   }
-  .profile__desc--mobile {
-    display: inline;
+  .profile__bodyInfo__desc--mobile {
+    display: block;
   }
 }

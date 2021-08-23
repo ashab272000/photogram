@@ -9,9 +9,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import './index.css'
 import Comment from './Comment'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { addComment, addLike, deleteLike, getComments, getNumOfComments, getNumOfLikes, getPost, getPostImageUrl, isLikedByUser } from '../../data/postRequests'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Skeleton from 'react-loading-skeleton'
 
 function PostScreen() {
 
@@ -24,7 +26,7 @@ function PostScreen() {
     const [commentAmount, setCommentAmount] = useState(0)
     const [commentInput, setCommentInput] = useState('')
     const authReducer = useSelector(state => state.authReducer)
-
+    const history = useHistory()
     // Whenever user clicks on the like button
     const handleLikeClick = async () => {
         // if user is not null
@@ -42,6 +44,10 @@ function PostScreen() {
             }
         }
     }   
+
+    const handleProfileClick = () => {
+        history.push(`/profile/${post.uid}`)
+    }
 
     const getDisplayTime = () => {
         // Get time difference in seconds
@@ -74,7 +80,8 @@ function PostScreen() {
                     uid: authReducer.user?.uid,
                     username: authReducer.user?.displayName,
                     userAvatar: authReducer.user?.photoURL,
-                    comment: commentInput
+                    comment: commentInput,
+                    createdAt: Date.now() - 1,
                 }
 
                 await addComment(post._id, commentInput, authReducer.user?.uid)
@@ -143,12 +150,17 @@ function PostScreen() {
             <Header />
             <div className="postScreen__postBody">
                 <div className="postScreen__postBody__post">
-                    <img src={imgUrl} alt="placeholderImage" />
+                    <LazyLoadImage
+                        src={imgUrl}
+                        effect='blur'
+                        placeholder={ <div style={{height: '300px', width: '300px', backgroundColor: 'black'}}> </div> }
+                    />
+                    {/* <img src={imgUrl} alt="placeholderImage" /> */}
                 </div>
                 <div className="postScreen__postBody__comments">
                     <div className="postScreen__postBody__commentsHeader">
                         <div className="postScreen__postBody__commentsHeaderRight">
-                            <Avatar src={post?.userAvatar} />
+                            <Avatar onClick={handleProfileClick} src={post?.userAvatar} />
                             <p>{post?.username}</p>
                         </div>
                         <div className="postScreen__postBody__commentsHeaderLeft">
@@ -189,9 +201,6 @@ function PostScreen() {
                     </div>
                 </div>
             </div>
-            {/* <div className="postScreen__morePosts">
-            
-            </div> */}
         </div>
     )
 }

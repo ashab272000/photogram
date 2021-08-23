@@ -1,45 +1,82 @@
+import { Button } from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
-import { useSelector } from 'react-redux'
+import { useCookies } from 'react-cookie'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
+import { signIn } from '../../actions'
 import Header from '../../components/Header'
-import { getAllPosts } from '../../data/postRequests'
-import db from '../../firebase'
+import { getPostByFollowingUsers, getPostsByTrending } from '../../data/postRequests'
+import db, { auth, provider } from '../../firebase'
 import useWindowDimensions from '../../hooks/UseWindowDimension'
+import firebase from 'firebase'
 import './index.css'
 import PostCard from './PostCard'
 
-function HomeScreen() {
+function HomeScreen({isTrending = false}) {
+    
     const [posts, setPosts] = useState([]);
     const [numOfCards, setNumOfCards] = useState(5)
     const authReducer = useSelector(state => state.authReducer)
+    const history = useHistory()
+    const [cookies, setCookie] = useCookies(['credential']);
+    const dispatch = useDispatch();
     
     const { height, width } = useWindowDimensions();
     
 
     const getColumns = () => {
-        const bodyColumns = []; 
-        for (let i = 0; i < numOfCards; i++) {
-            const postsInColumns = [];
-            for (let j = i; j < posts.length; j+= numOfCards) {
-                
-                const post = posts[j];
-                postsInColumns.push(<PostCard key={post._id} id={post._id} post={post} />);
+        // If there are posts, then render the posts
+        // Else render a button to switch to trending
+        if(posts.length > 0){
+            const bodyColumns = []; 
+            for (let i = 0; i < numOfCards; i++) {
+                const postsInColumns = [];
+                for (let j = i; j < posts.length; j+= numOfCards) {
+                    
+                    const post = posts[j];
+                    postsInColumns.push(<PostCard key={post._id} id={post._id} post={post} />);
+                }
+                bodyColumns.push(
+                <div className="homeScreen__bodyColumn" key={i}> 
+                    {postsInColumns}
+                </div>);
             }
-            bodyColumns.push(
-            <div className="homeScreen__bodyColumn" key={i}> 
-                {postsInColumns}
-            </div>);
+    
+            return bodyColumns;    
         }
-
-        return bodyColumns;
     }
 
     useEffect(async () => {
-       const posts = await getAllPosts();
-       if(posts != null) {
-           setPosts(posts)
-       }
-        
+
+        if(authReducer.user == null && cookies.credential != null){
+            const token = cookies.credential.oauthIdToken ?? cookies.credential.idToken
+            const credential = await firebase.auth.GoogleAuthProvider.credential(token);
+            auth.signInWithCredential(credential).then((result) => {
+              setCookie('credential', result.credential)
+              dispatch(signIn(result?.user))
+              history.push('/');
+            }).catch((error) => {
+              console.log(error)
+            })
+        }
     }, [])
+
+    useEffect(async () => {
+        let tempPosts = []
+        if(authReducer.user != null && !isTrending) {
+            tempPosts = await getPostByFollowingUsers(authReducer.user?.uid);
+        }else {
+            tempPosts = await getPostsByTrending();
+        }
+        
+        if(tempPosts.length == 0){
+            history.push('/trending')
+        }
+
+        setPosts(tempPosts)
+        
+        
+    }, [isTrending])
 
     useEffect(() => {
         let bodyPadding = 20 * 2;

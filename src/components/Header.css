@@ -26,11 +26,90 @@
   right: 25px;
 }
 
-.flexible {
+.header__middle {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header__searchBar > input {
+  background-color: #dbdbdb;
+  border: 1px solid #aaa;
+  outline: none;
+  width: 200px;
+  padding: 4px;
+}
+
+.header__middle .dropdown {
+  width: 310px;
+  right: calc(50% - 120px);
+  max-height: 40vh;
+}
+
+.header__middle .dropdown__pointer {
+  transform: translate(155px, -10px) rotate(45deg);
+}
+
+.header__middle .dropdown__pointer2 {
+  transform: translate(150px, 0px);
+}
+
+.header__middle .dropdown {
+  margin-top: 12px;
+}
+
+.header__middle .MuiAvatar-root {
+  height: 18px;
+  width: 18px;
+}
+
+.header__middle .dropdown__body p {
+  font-size: 16px;
 }
 
 .divider {
   height: 1px;
   background-color: #dbdbdb;
+}
+
+@media screen and (max-width: 736px) {
+  .header__left > h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .header__right {
+    min-width: 0;
+  }
+
+  .header {
+    padding: 12px 12px;
+  }
+
+  .header__rightProfile > .dropdown {
+    top: 70px;
+    right: 6px;
+  }
+
+  .header__rightProfile .dropdown__pointer {
+    transform: translate(180px, -10px) rotate(45deg);
+  }
+
+  .header__rightProfile .dropdown__pointer2 {
+    transform: translate(175px, 0px);
+  }
+
+  .header__middle .dropdown {
+    width: 250px;
+    right: calc(50% - 155px);
+  }
+
+  .header__middle .dropdown__pointer {
+    transform: translate(117px, -10px) rotate(45deg);
+  }
+
+  .header__middle .dropdown__pointer2 {
+    transform: translate(112px, 0px);
+  }
 }
