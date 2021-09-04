@@ -15,16 +15,20 @@
 }
 
 .postScreen__postBody__post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: fit-content;
   background-color: #fafafa;
   border: 1px solid #dbdbdb;
+  height: 76vh;
   border-right: 0;
 }
 
-.postScreen__postBody__post > img {
+.postScreen__postBody__post img {
   display: block;
   max-width: 50vw;
-  height: 76vh;
+  height: 100%;
   object-fit: scale-down;
 }
 
@@ -130,9 +134,10 @@
   .postScreen__postBody__post {
     border-right: 1px solid #dbdbdb;
     border-bottom: 0;
+    height: auto;
   }
 
-  .postScreen__postBody__post > img {
+  .postScreen__postBody__post img {
     max-width: 90vw;
     max-height: 90vh;
     height: auto;

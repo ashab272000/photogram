@@ -2,7 +2,15 @@ import axios from 'axios'
 import FormData from 'form-data';
 import fs from 'fs'
 // Get all the post by latest
-const url = "http://localhost:5000";
+const url = "http://photogram-ashab272000.codes:5000";
+const headers = {
+    headers : {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    },
+}
+
+
 export const getAllPosts = async () => {
     try {
         
@@ -121,7 +129,13 @@ export const addComment = async (postId, comment, uid) => {
             uid
         }
 
-        const res = await axios.post(`${url}/post/addcomment`, data)
+        var form_data = new FormData();
+    
+        for (var key in data ) {
+            form_data.append(key, data[key]);
+        }
+
+        const res = await axios.post(`${url}/post/addcomment`, form_data)
 
         if(res.data.success){
             return res.data.data  
@@ -141,9 +155,16 @@ export const addLike = async (postId, uid) => {
             uid
         }
 
-        console.log(data)
+        var form_data = new FormData();
     
-        const res = await axios.post(`${url}/post/addLike`, data)
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
+
+        console.log("form_data")
+        console.log(form_data)
+    
+        const res = await axios.post(`${url}/post/addLike`, form_data)
     
         if(res.data.success){
             return res.data.data  
@@ -162,8 +183,14 @@ export const deleteLike = async (postId, uid) => {
             postId,
             uid
         }
+
+        var form_data = new FormData();
+
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
     
-        const res = await axios.post(`${url}/post/deleteLike`, data)
+        const res = await axios.post(`${url}/post/deleteLike`, form_data)
     
         if(res.data.success){
             return res.data.data  
@@ -183,8 +210,15 @@ export const isLikedByUser = async (postId, uid) => {
             postId,
             uid
         }
+
+        var form_data = new FormData();
+
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
     
-        const res = await axios.post(`${url}/post/isLikedByUser`, data)
+    
+        const res = await axios.post(`${url}/post/isLikedByUser`, form_data)
     
         if(res.data.success){
             return res.data.data  

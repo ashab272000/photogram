@@ -1,7 +1,14 @@
 import { FlashOnTwoTone } from '@material-ui/icons';
 import axios from 'axios'
 
-const url = "http://localhost:5000";
+const url = "http://photogram-ashab272000.codes:5000";
+const headers = {
+    headers : {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    }, 
+}
 
 export const getProfile = async (id) => {
     try {
@@ -24,8 +31,13 @@ export const getProfile = async (id) => {
  * @returns 
  */
 export const addProfile = async(user) => {
+    var form_data = new FormData();
+
+    for ( var key in user ) {
+        form_data.append(key, user[key]);
+    }
     try {
-        const res = await axios.post(`${url}/profile/add`, user)
+        const res = await axios.post(`${url}/profile/add`, form_data)
         if(res.data.success){
             return res.data.data
         }
@@ -80,7 +92,13 @@ export const followProfile = async (userId, followUserId) => {
             uid: userId,
             followUid: followUserId,
         }
-        const res = await axios.post(`${url}/profile/followProfile`, data)
+        var form_data = new FormData();
+
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
+
+        const res = await axios.post(`${url}/profile/followProfile`, form_data)
 
         if(res.data.success){
             return res.data.data
@@ -101,7 +119,14 @@ export const unFollowProfile = async (userId, followUserId) => {
             uid: userId,
             followUid: followUserId,
         }
-        const res = await axios.post(`${url}/profile/unFollowProfile`, data)
+
+        var form_data = new FormData();
+
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
+
+        const res = await axios.post(`${url}/profile/unFollowProfile`, form_data)
 
         if(res.data.success){
             return res.data.data
@@ -118,10 +143,19 @@ export const unFollowProfile = async (userId, followUserId) => {
 
 export const setProfileDesc = async (userId, desc) => {
     try {
-        const res = await axios.post(`${url}/profile/description/set`, {
+
+        const data = {
             userId,
             desc
-        })
+        }
+
+        var form_data = new FormData();
+
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
+
+        const res = await axios.post(`${url}/profile/description/set`, form_data)
 
         if(res.data.success){
             return res.data.data

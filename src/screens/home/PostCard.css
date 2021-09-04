@@ -16,7 +16,7 @@
   height: 24px;
   margin-right: 12px;
   cursor: pointer;
-  z-index: 1;
+  z-index: 0;
 }
 
 .postCard__body {

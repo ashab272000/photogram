@@ -69,16 +69,9 @@ function PostCard({_id, post}) {
             </div>
             <div className="postCard__body">
                 <LazyLoadImage src={imgUrl} placeholder={<Skeleton height={200}/>} />
-                {/* <img src={imgUrl} alt="postImage"  /> */}
             </div>
             <div className="postCard__footer">
-                <div className="postCard__footerExpand">
-                    <IconButton>
-                       <UnfoldMoreIcon />
-                    </IconButton>
-                </div>
                 <div className="flexible">
-                    <img src="" alt="" />
                 </div>
                 <div className="postCard__footerIcons">
                     <IconButton onClick ={handleLikeClick}>
@@ -87,9 +80,6 @@ function PostCard({_id, post}) {
                     <IconButton>
                        <ModeCommentOutlinedIcon onClick={handleCommentClick} />
                     </IconButton>
-                    {/* <IconButton>
-                       <BookmarkBorderOutlinedIcon />
-                    </IconButton> */}
                 </div>
             </div>
         </div>

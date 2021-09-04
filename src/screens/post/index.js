@@ -191,7 +191,6 @@ function PostScreen() {
                             </div>
                         </div>
                         <div className="postScreen__postBody__commentsFooterInput">
-                            <InsertEmoticonIcon />
                             <form onSubmit={handleCommentClick}>
                                 <input type="text" value={commentInput} placeholder="Add a comment" onChange={handleCommentInputChange} />
                                 <button type="sumbit">Submit Button</button>
