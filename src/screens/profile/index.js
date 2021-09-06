@@ -1,15 +1,13 @@
-import { Avatar, Button, IconButton } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { Avatar, Button } from '@material-ui/core'
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom';
 import Header from '../../components/Header'
 import { getPostImageUrl } from '../../data/postRequests';
 import { followProfile, getIsFollowing, getProfile, getProfilePosts, setProfileDesc, unFollowProfile } from '../../data/profileRequests';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentIcon from '@material-ui/icons/ModeComment';
-import EditIcon from '@material-ui/icons/Edit';
 import './index.css'
 import { useSelector } from 'react-redux';
-import { findAllByDisplayValue } from '@testing-library/react';
 
 function ProfileScreen() {
 

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import CloseIcon from '@material-ui/icons/Close';
 import { Avatar, Button, CircularProgress, IconButton } from '@material-ui/core';
 import './AddPost.css'
 import ReactModal from 'react-modal';
 import { useDropzone} from 'react-dropzone';
-import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
-import firebase from 'firebase';
 import { addPost } from '../../data/postRequests';
 import useWindowDimensions from '../../hooks/UseWindowDimension';
+import Resizer from "react-image-file-resizer";
 
 function AddPost({ isOpen, onClickClose }) {
 
@@ -19,14 +18,31 @@ function AddPost({ isOpen, onClickClose }) {
     
     const {getRootProps, getInputProps} = useDropzone({
         accept: 'image/*',
-        onDrop: (acceptedFiles) => {
-            setFiles(
-                acceptedFiles.map((file) => Object.assign(file, {
-                    preview: URL.createObjectURL(file),
-                }))
-            );
+        onDrop: async (acceptedFiles) => {
+            const resizedFile = await resizeFile(acceptedFiles[0]);
+            const file = Object.assign(resizedFile, {
+                preview: URL.createObjectURL(resizedFile)
+            })
+            console.log(file)
+            setFiles([file]);
         }
     })
+
+    const resizeFile = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+        file,
+        1080,
+        11080,
+        "JPEG",
+        80,
+        0,
+        (uri) => {
+            resolve(uri);
+        },
+        "file"
+        );
+    });
 
     const modalStyle = {
         content : {

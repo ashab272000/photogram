@@ -1,19 +1,15 @@
 import { Avatar, Button, IconButton } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Header from '../../components/Header'
-import db, { storageRef } from '../../firebase'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import './index.css'
 import Comment from './Comment'
 import { useHistory, useParams } from 'react-router-dom'
-import firebase from 'firebase'
 import { addComment, addLike, deleteLike, getComments, getNumOfComments, getNumOfLikes, getPost, getPostImageUrl, isLikedByUser } from '../../data/postRequests'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import Skeleton from 'react-loading-skeleton'
 
 function PostScreen() {
 

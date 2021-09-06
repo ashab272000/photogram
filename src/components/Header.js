@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import HomeIcon from '@material-ui/icons/Home';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import DropdownItem from './DropdownItem';
-import ReactModal from 'react-modal';
 import AddPost from '../screens/addPost/AddPost';
 import { signOut } from '../actions';
 import { searchProfiles } from '../data/profileRequests';

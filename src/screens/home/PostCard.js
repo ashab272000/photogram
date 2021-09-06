@@ -1,16 +1,14 @@
 import { Avatar, IconButton } from '@material-ui/core'
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import './PostCard.css'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
-import db, { storageRef } from '../../firebase';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { addLike, deleteLike, getPostImage, getPostImageUrl, isLikedByUser } from '../../data/postRequests';
+import { addLike, deleteLike, getPostImageUrl, isLikedByUser } from '../../data/postRequests';
 
 
 function PostCard({_id, post}) {

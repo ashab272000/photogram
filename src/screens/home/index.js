@@ -1,12 +1,11 @@
-import { Button } from '@material-ui/core'
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { signIn } from '../../actions'
 import Header from '../../components/Header'
 import { getPostByFollowingUsers, getPostsByTrending } from '../../data/postRequests'
-import db, { auth, provider } from '../../firebase'
+import { auth } from '../../firebase'
 import useWindowDimensions from '../../hooks/UseWindowDimension'
 import firebase from 'firebase'
 import './index.css'
@@ -42,7 +41,7 @@ function HomeScreen({isTrending = false}) {
                 </div>);
             }
     
-            return bodyColumns;    
+            return bodyColumns;
         }
     }
 

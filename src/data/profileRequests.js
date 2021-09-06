@@ -1,7 +1,7 @@
-import { FlashOnTwoTone } from '@material-ui/icons';
-import axios from 'axios'
+import { get, post} from 'axios'
 
-const url = "http://photogram-ashab272000.codes:5000";
+// const url = "http://photogram-ashab272000.codes:5000";
+const url = "http://localhost:5000";
 const headers = {
     headers : {
         'Access-Control-Allow-Origin': '*',
@@ -12,7 +12,7 @@ const headers = {
 
 export const getProfile = async (id) => {
     try {
-        const res = await axios.get(`${url}/profile/${id}`)
+        const res = await get(`${url}/profile/${id}`)
         if(res.data.success){
             return res.data.data
         }
@@ -30,14 +30,15 @@ export const getProfile = async (id) => {
  * @param {{uid: String, username: String, userAvatar: String}} user 
  * @returns 
  */
-export const addProfile = async(user) => {
-    var form_data = new FormData();
-
-    for ( var key in user ) {
-        form_data.append(key, user[key]);
-    }
+export const addProfile = async (user) => {
     try {
-        const res = await axios.post(`${url}/profile/add`, form_data)
+        // var form_data = new FormData();
+    
+        // for ( var key in user ) {
+        //     form_data.append(key, user[key]);
+        // }
+
+        const res = await post(`${url}/profile/add`, user)
         if(res.data.success){
             return res.data.data
         }
@@ -56,7 +57,7 @@ export const getProfilePosts = async(userId, limit = 6, createdAt = 0) => {
     }
 
     try {
-        const res = await axios.get(`${url}/post/profile/${userId}/${limit}/${createdAt}`)
+        const res = await get(`${url}/post/profile/${userId}/${limit}/${createdAt}`)
         if(res.data.success){
             return res.data.data
         }
@@ -71,7 +72,7 @@ export const getProfilePosts = async(userId, limit = 6, createdAt = 0) => {
 export const getIsFollowing = async (userId, followUserId) => {
     try {
         
-        const res = await axios.get(`${url}/profile/isFollowing/${userId}/${followUserId}`)
+        const res = await get(`${url}/profile/isFollowing/${userId}/${followUserId}`)
         if(res.data.success){
             return res.data.data
         }
@@ -92,13 +93,13 @@ export const followProfile = async (userId, followUserId) => {
             uid: userId,
             followUid: followUserId,
         }
-        var form_data = new FormData();
+        // var form_data = new FormData();
 
-        for ( var key in data ) {
-            form_data.append(key, data[key]);
-        }
+        // for ( var key in data ) {
+        //     form_data.append(key, data[key]);
+        // }
 
-        const res = await axios.post(`${url}/profile/followProfile`, form_data)
+        const res = await post(`${url}/profile/followProfile`, data)
 
         if(res.data.success){
             return res.data.data
@@ -120,13 +121,13 @@ export const unFollowProfile = async (userId, followUserId) => {
             followUid: followUserId,
         }
 
-        var form_data = new FormData();
+        // var form_data = new FormData();
 
-        for ( var key in data ) {
-            form_data.append(key, data[key]);
-        }
+        // for ( var key in data ) {
+        //     form_data.append(key, data[key]);
+        // }
 
-        const res = await axios.post(`${url}/profile/unFollowProfile`, form_data)
+        const res = await post(`${url}/profile/unFollowProfile`, data)
 
         if(res.data.success){
             return res.data.data
@@ -149,13 +150,13 @@ export const setProfileDesc = async (userId, desc) => {
             desc
         }
 
-        var form_data = new FormData();
+        // var form_data = new FormData();
 
-        for ( var key in data ) {
-            form_data.append(key, data[key]);
-        }
+        // for ( var key in data ) {
+        //     form_data.append(key, data[key]);
+        // }
 
-        const res = await axios.post(`${url}/profile/description/set`, form_data)
+        const res = await post(`${url}/profile/description/set`, data)
 
         if(res.data.success){
             return res.data.data
@@ -172,7 +173,7 @@ export const setProfileDesc = async (userId, desc) => {
 export const searchProfiles = async (searchValue) => {
     if(searchValue.length > 1){
         try {
-            const res = await axios.get(`${url}/profile/search/${searchValue}`)
+            const res = await get(`${url}/profile/search/${searchValue}`)
             if(res.data.success){
                 return res.data.data
             } else {

@@ -1,15 +1,12 @@
 import HomeScreen from './screens/home';
-import {BrowserRouter as Router, Switch, Link, Route, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import LoginScreen from './screens/login';
 import {createStore} from 'redux';
 import allReducers from './reducers'
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import PostScreen from './screens/post';
 import ProfileScreen from './screens/profile';
-import { CookiesProvider, useCookies } from 'react-cookie';
-import { auth } from './firebase';
-import { useEffect } from 'react';
-import { signIn } from './actions';
+import { CookiesProvider } from 'react-cookie';
 
 const store = createStore(allReducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
