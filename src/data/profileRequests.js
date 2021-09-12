@@ -1,14 +1,13 @@
 import { get, post} from 'axios'
 
-// const url = "http://photogram-ashab272000.codes:5000";
-const url = "http://localhost:5000";
-const headers = {
-    headers : {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type',
-    }, 
-}
+const url = "http://photogram-ashab272000.codes:5000";
+// const url = "http://localhost:5000";
+let jsonConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+    }
+  };
 
 export const getProfile = async (id) => {
     try {
@@ -38,7 +37,7 @@ export const addProfile = async (user) => {
         //     form_data.append(key, user[key]);
         // }
 
-        const res = await post(`${url}/profile/add`, user)
+        const res = await post(`${url}/profile/add`, user, jsonConfig)
         if(res.data.success){
             return res.data.data
         }
@@ -99,7 +98,7 @@ export const followProfile = async (userId, followUserId) => {
         //     form_data.append(key, data[key]);
         // }
 
-        const res = await post(`${url}/profile/followProfile`, data)
+        const res = await post(`${url}/profile/followProfile`, data, jsonConfig)
 
         if(res.data.success){
             return res.data.data
@@ -127,7 +126,7 @@ export const unFollowProfile = async (userId, followUserId) => {
         //     form_data.append(key, data[key]);
         // }
 
-        const res = await post(`${url}/profile/unFollowProfile`, data)
+        const res = await post(`${url}/profile/unFollowProfile`, data, jsonConfig)
 
         if(res.data.success){
             return res.data.data
@@ -156,7 +155,7 @@ export const setProfileDesc = async (userId, desc) => {
         //     form_data.append(key, data[key]);
         // }
 
-        const res = await post(`${url}/profile/description/set`, data)
+        const res = await post(`${url}/profile/description/set`, data, jsonConfig)
 
         if(res.data.success){
             return res.data.data

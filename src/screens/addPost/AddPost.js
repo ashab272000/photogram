@@ -13,7 +13,8 @@ function AddPost({ isOpen, onClickClose }) {
 
     const [files, setFiles] = useState([])
     const [header, setHeader] = useState('New Post')
-    const [captionValue, setCaptionValue] = useState('')
+    const [captionInput, setCaptionInput] = useState('')
+    const [clickedshare, setClickedShare] = useState(false)
     const authReducer = useSelector(state => state.authReducer)
     
     const {getRootProps, getInputProps} = useDropzone({
@@ -61,44 +62,31 @@ function AddPost({ isOpen, onClickClose }) {
     }
     const handleClickShare = async () => {
         // Set the header and body to uploading set
-        setHeader('Uploading')
-        setBody(loadingBody)
-        // const newPostRef = await db.collection('posts')
-        // .add({
-        //     uid: user.uid,
-        //     username: user.displayName,
-        //     userAvatar: user?.photoURL,
-        //     caption: captionValue,
-        //     likes:0,
-        //     comments:0,
-        //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        // })
-
-        // // newPostRef.
-        // const imageRef = storageRef.child(`posts/${newPostRef.id}.jpg`)
-        // await imageRef.put(files[0])
-
-        // Add Post
-        console.log('File')
-        console.log(files[0])
-        await addPost(files[0], captionValue, authReducer.user?.uid)
-
-        // Close the modal after reseting the header and the body
-        setHeader('New Post')
-        setBody(initialBody)
-        setFiles([])
-        onClickClose()
+       setClickedShare(true);
         
     }
     
     const handleCaptionOnChange = (caption) => {
-        setCaptionValue(caption)
+        setCaptionInput(caption)
+        console.log(captionInput);
     }
 
-    useEffect(() => {
-        
-        console.log(captionValue);
-    }, [captionValue])
+    useEffect(async () => {
+        if(clickedshare){
+            setHeader('Uploading')
+            setBody(loadingBody)
+    
+            // Add Post
+            await addPost(files[0], captionInput, authReducer.user?.uid)
+    
+            // Close the modal after reseting the header and the body
+            setHeader('New Post')
+            setBody(initialBody)
+            setFiles([])
+            onClickClose()
+            setClickedShare(false);
+        }
+    }, [clickedshare])
     
 
 

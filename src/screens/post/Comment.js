@@ -5,6 +5,9 @@ function Comment({comment}) {
 
     const getDisplayTime = () => {
         // Get time difference in seconds
+        if(comment?.createdAt == -1){
+            return '0s';
+        }
         const timeDiff = (Date.now() - Date.parse(comment?.createdAt))/1000
         
         if(timeDiff < 60){

@@ -1,13 +1,20 @@
 import { get, post} from 'axios'
 import FormData from 'form-data';
 // Get all the post by latest
-// const url = "http://photogram-ashab272000.codes:5000";
-const url = "http://localhost:5000";
-const headers = {
-    headers : {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-    },
+const url = "http://photogram-ashab272000.codes:5000";
+// const url = "http://localhost:5000";
+let jsonConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+    }
+};
+
+let formConfig = {
+    headers: {
+        'Content-Type': 'multipart/form-data',
+        "Access-Control-Allow-Origin": "*",
+    }
 }
 
 
@@ -101,9 +108,10 @@ export const addPost = async (file, caption, uid) => {
         form.append('uid', uid)
         form.append('caption', caption ?? '')
         form.append('image', file)
+        console.log('Caption from AddPost')
+        console.log(form.get('caption'));
 
-
-        const res = await post(`${url}/post/add`,form)
+        const res = await post(`${url}/post/add`,form, formConfig)
         if(res.data.success){
             return res.data.post;
         }
@@ -136,7 +144,7 @@ export const addComment = async (postId, comment, uid) => {
         //     form_data.append(key, data[key]);
         // }
 
-        const res = await post(`${url}/post/addcomment`, data)
+        const res = await post(`${url}/post/addcomment`, data, jsonConfig)
 
         if(res.data.success){
             return res.data.data  
@@ -165,7 +173,7 @@ export const addLike = async (postId, uid) => {
         // console.log("form_data")
         // console.log(form_data)
     
-        const res = await post(`${url}/post/addLike`, data)
+        const res = await post(`${url}/post/addLike`, data, jsonConfig)
     
         if(res.data.success){
             return res.data.data  
@@ -191,7 +199,7 @@ export const deleteLike = async (postId, uid) => {
         //     form_data.append(key, data[key]);
         // }
     
-        const res = await post(`${url}/post/deleteLike`, data)
+        const res = await post(`${url}/post/deleteLike`, data, jsonConfig)
     
         if(res.data.success){
             return res.data.data  
@@ -219,7 +227,7 @@ export const isLikedByUser = async (postId, uid) => {
         // }
     
     
-        const res = await post(`${url}/post/isLikedByUser`, data)
+        const res = await post(`${url}/post/isLikedByUser`, data, jsonConfig)
     
         if(res.data.success){
             return res.data.data  

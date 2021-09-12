@@ -77,7 +77,7 @@ function PostScreen() {
                     username: authReducer.user?.displayName,
                     userAvatar: authReducer.user?.photoURL,
                     comment: commentInput,
-                    createdAt: Date.now() - 1,
+                    createdAt: -1,
                 }
 
                 await addComment(post._id, commentInput, authReducer.user?.uid)
